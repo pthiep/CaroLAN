@@ -20,10 +20,8 @@ namespace CaroLAN
         public Form1()
         {
             InitializeComponent();
-            ChessBoard = new ChessBoardManager(pnlChessBoard);
+            ChessBoard = new ChessBoardManager(pnlChessBoard, txtBPlayerName, picBMark);
             ChessBoard.DrawChessBoard();
         }
-
-        
     }
 }

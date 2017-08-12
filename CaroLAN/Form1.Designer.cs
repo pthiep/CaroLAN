@@ -115,9 +115,11 @@
             // 
             // picBMark
             // 
+            this.picBMark.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.picBMark.Location = new System.Drawing.Point(149, 16);
             this.picBMark.Name = "picBMark";
             this.picBMark.Size = new System.Drawing.Size(115, 86);
+            this.picBMark.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picBMark.TabIndex = 2;
             this.picBMark.TabStop = false;
             // 
