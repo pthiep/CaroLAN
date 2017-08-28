@@ -15,7 +15,6 @@ namespace CaroLAN
         public string Name { get => name; set => name = value; }
 
         private Image mark;
-        
         private string name;
 
         #endregion
