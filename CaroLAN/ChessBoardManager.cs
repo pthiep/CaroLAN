@@ -29,6 +29,33 @@ namespace CaroLAN
         private TextBox playerName;
         private PictureBox mark;
         private List<List<Button>> matrix;
+
+        private event EventHandler playerMarked;
+        public event EventHandler PlayerMarked
+        {
+            add
+            {
+                playerMarked += value;
+            }
+            remove
+            {
+                playerMarked -= value;
+            }
+        }
+
+        private event EventHandler endedGame;
+        public event EventHandler EndedGame
+        {
+            add
+            {
+                endedGame += value;
+            }
+            remove
+            {
+                endedGame -= value;
+            }
+        }
+
         #endregion
 
         #region Initialize
@@ -52,6 +79,7 @@ namespace CaroLAN
         #region Methods
         public void DrawChessBoard()
         {
+            chessBoard.Enabled = true;
             Matrix = new List<List<Button>>();
             Button oldBtn = new Button() { Width = 0, Location = new Point(0, 0) };
 
@@ -93,15 +121,19 @@ namespace CaroLAN
             ChangeMark(btn);
             ChangePlayer();
 
+            if (playerMarked != null)
+                playerMarked(this, new EventArgs());
+
             if (isEndGame(btn))
             {
                 endGame();
             }
         }
 
-        private void endGame()
+        public void endGame()
         {
-            MessageBox.Show("Kết thúc");
+            if (endedGame != null)
+                endedGame(this, new EventArgs());
         }
 
         private bool isEndGame(Button btn)
