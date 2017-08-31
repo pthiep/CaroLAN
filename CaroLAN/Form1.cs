@@ -17,6 +17,7 @@ namespace CaroLAN
         ChessBoardManager ChessBoard;
 
         #endregion
+
         public Form1()
         {
             InitializeComponent();
@@ -30,15 +31,35 @@ namespace CaroLAN
 
             timerCoolDown.Interval = Contents.COOL_DOWN_INTERVAL;
 
-            ChessBoard.DrawChessBoard();
-            
+
+            newGame();
         }
+
+        #region Methods
 
         void endGame()
         {
             timerCoolDown.Stop();
             pnlChessBoard.Enabled = false;
             MessageBox.Show("End game !!!");
+        }
+
+        void newGame()
+        {
+            progBCoolDown.Value = 0;
+            timerCoolDown.Stop();
+
+            ChessBoard.DrawChessBoard();
+        }
+
+        void quitGame()
+        {
+            Application.Exit();
+        }
+
+        void undoGame()
+        {
+
         }
 
         private void ChessBoard_PlayerMarked(object sender, EventArgs e)
@@ -60,5 +81,30 @@ namespace CaroLAN
                 endGame();
             }
         }
+
+        private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            newGame();
+        }
+
+        private void undoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            undoGame();
+        }
+
+        private void quitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            quitGame();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("Bạn có chắc muốn thoát game ?", "Thông báo", MessageBoxButtons.OKCancel) != DialogResult.OK)
+            {
+                e.Cancel = true;
+            }
+        }
+
+        #endregion
     }
 }

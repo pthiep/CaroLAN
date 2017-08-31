@@ -70,8 +70,6 @@ namespace CaroLAN
                 new Player("HowKTeam", Image.FromFile(Application.StartupPath + "\\Resources\\P1.png")),
                 new Player("Education", Image.FromFile(Application.StartupPath + "\\Resources\\P2.png"))
             };
-            CurrentPlayer = 0;
-            ChangePlayer();
         }
 
         #endregion
@@ -80,6 +78,10 @@ namespace CaroLAN
         public void DrawChessBoard()
         {
             chessBoard.Enabled = true;
+            chessBoard.Controls.Clear();
+            CurrentPlayer = 0;
+            ChangePlayer();
+
             Matrix = new List<List<Button>>();
             Button oldBtn = new Button() { Width = 0, Location = new Point(0, 0) };
 
