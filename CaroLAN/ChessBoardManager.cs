@@ -23,6 +23,7 @@ namespace CaroLAN
         public TextBox PlayerName { get => playerName; set => playerName = value; }
         public PictureBox Mark { get => mark; set => mark = value; }
         public List<List<Button>> Matrix { get => matrix; set => matrix = value; }
+        public Stack<Playinfo> PlayTimeline { get => playTimeline; set => playTimeline = value; }
 
         private List<Player> player;
         private int currentPlayer;
@@ -56,6 +57,8 @@ namespace CaroLAN
             }
         }
 
+        private Stack<Playinfo> playTimeline;
+
         #endregion
 
         #region Initialize
@@ -70,6 +73,7 @@ namespace CaroLAN
                 new Player("HowKTeam", Image.FromFile(Application.StartupPath + "\\Resources\\P1.png")),
                 new Player("Education", Image.FromFile(Application.StartupPath + "\\Resources\\P2.png"))
             };
+
         }
 
         #endregion
@@ -81,6 +85,8 @@ namespace CaroLAN
             chessBoard.Controls.Clear();
             CurrentPlayer = 0;
             ChangePlayer();
+
+            this.PlayTimeline = new Stack<Playinfo>();
 
             Matrix = new List<List<Button>>();
             Button oldBtn = new Button() { Width = 0, Location = new Point(0, 0) };
@@ -121,7 +127,14 @@ namespace CaroLAN
                 return;
 
             ChangeMark(btn);
+
+            PlayTimeline.Push(new Playinfo(getChessPoint(btn), currentPlayer));
+
+            CurrentPlayer = CurrentPlayer == 1 ? 0 : 1;
+
             ChangePlayer();
+
+
 
             if (playerMarked != null)
                 playerMarked(this, new EventArgs());
@@ -136,6 +149,27 @@ namespace CaroLAN
         {
             if (endedGame != null)
                 endedGame(this, new EventArgs());
+        }
+
+        public bool undoGame()
+        {
+            if (PlayTimeline.Count <= 0)
+                return false;
+            Playinfo oldPoint = PlayTimeline.Pop();
+            Button btn = Matrix[oldPoint.Point.Y][oldPoint.Point.X];
+            btn.BackgroundImage = null;
+
+            if (PlayTimeline.Count <= 0)
+            {
+                CurrentPlayer = 0;
+            }
+            else
+            {
+                oldPoint = PlayTimeline.Peek();
+                CurrentPlayer = oldPoint.CurrentPlayer == 1 ? 0 : 1;
+            }
+            ChangePlayer();
+            return true;
         }
 
         private bool isEndGame(Button btn)
@@ -278,7 +312,6 @@ namespace CaroLAN
         private void ChangeMark(Button btn)
         {
             btn.BackgroundImage = Player[CurrentPlayer].Mark;
-            CurrentPlayer = CurrentPlayer == 1 ? 0 : 1;
         }
 
         private void ChangePlayer()

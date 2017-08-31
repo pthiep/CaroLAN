@@ -41,6 +41,7 @@ namespace CaroLAN
         {
             timerCoolDown.Stop();
             pnlChessBoard.Enabled = false;
+            undoToolStripMenuItem.Enabled = false;
             MessageBox.Show("End game !!!");
         }
 
@@ -48,6 +49,8 @@ namespace CaroLAN
         {
             progBCoolDown.Value = 0;
             timerCoolDown.Stop();
+            undoToolStripMenuItem.Enabled = true;
+
 
             ChessBoard.DrawChessBoard();
         }
@@ -59,7 +62,7 @@ namespace CaroLAN
 
         void undoGame()
         {
-
+            ChessBoard.undoGame();
         }
 
         private void ChessBoard_PlayerMarked(object sender, EventArgs e)
