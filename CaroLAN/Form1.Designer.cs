@@ -112,6 +112,7 @@
             this.btnLAN.TabIndex = 4;
             this.btnLAN.Text = "LAN";
             this.btnLAN.UseVisualStyleBackColor = true;
+            this.btnLAN.Click += new System.EventHandler(this.btnLAN_Click);
             // 
             // txtBIP
             // 
@@ -208,6 +209,7 @@
             this.Name = "Form1";
             this.Text = "Caro LAN C#";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.Shown += new System.EventHandler(this.Form1_Shown);
             this.panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picBAvatar)).EndInit();
             this.panel3.ResumeLayout(false);
